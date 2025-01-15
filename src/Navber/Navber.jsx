@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import navicon from '/assets/favicon.jpg'
+import { Authcontext } from '../Authprovider/Authprovider';
 
 const Navber = () => {
+
+const {logout,user} = useContext(Authcontext);
+console.log(user);
+
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -18,7 +23,7 @@ const Navber = () => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16" />
+                  d="M4 6h16M4 12h8m-8 6h16"/>
               </svg>
             </div>
             <ul
@@ -36,13 +41,28 @@ const Navber = () => {
           <ul className="menu menu-horizontal px-1">
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/allcampaign'>Allcampaign</Link></li>
-          <li><Link to='/Addcamp'>Add New Camp</Link></li>
-          <li><Link to='/mycamp'>My Campaign</Link></li>
+          <li>{user && <Link to='/Addcamp'>Add New Camp</Link>}</li>
+          <li>{user && <Link to='/mycamp'>My Campaign</Link>}</li>
           </ul>
         </div>
         <div className="navbar-end">
-        <li className='list-none'><Link to='/login'>Login</Link></li>
+         
+      
+        {
+            user&& user?.email ? <>
+             <p>{user.displayName}</p> 
+             <button onClick={logout} className='btn btn-success'>logout</button>
+            </>
+            
+            
+            
+            :  <li className='list-none'><Link to='/login'>Login</Link></li>
+          
+          
+          
+          }
         </div>
+  
       </div>
     );
 };

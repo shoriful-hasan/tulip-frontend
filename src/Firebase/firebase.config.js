@@ -5,10 +5,10 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyApDuHuHQv5YpUqLFr4vewkK9v1OQOwvnE",
-  authDomain: "tulip-auth-dae84.firebaseapp.com",
-  projectId: "tulip-auth-dae84",
-  storageBucket: "tulip-auth-dae84.firebasestorage.app",
+  apiKey: import.meta.env.VITE_apiKey, 
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.VITE_storageBucket,
   messagingSenderId: "790565035697",
   appId: "1:790565035697:web:76490c7744671630ab0c90"
 };

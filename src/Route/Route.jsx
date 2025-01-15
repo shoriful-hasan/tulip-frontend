@@ -8,6 +8,7 @@ import Addnew from '../Addnew/Addnew';
 import Mycamp from '../Mycamp/Mycamp';
 import Login from '../Authentication/Login';
 import Register from '../Authentication/Register';
+import Private from '../Private/Private';
 
 
 
@@ -26,12 +27,12 @@ const router = createBrowserRouter([
             },
             {
                 path : '/Addcamp',
-                element : <Addnew></Addnew>
+                element : <Private privatecontent={<Addnew></Addnew>}></Private>
             },
             {
 
                 path : '/mycamp',
-                element : <Mycamp></Mycamp>
+                element : <Private privatecontent={<Mycamp></Mycamp>}></Private>
             },
             {
                 path : '/login',

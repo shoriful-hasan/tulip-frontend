@@ -5,9 +5,11 @@ import Navber from '../Navber/Navber';
 const Mainlayout = () => {
     return (
         <div>
-         <div className='px-2'>
-             <div className='border border-red-200'><Navber></Navber></div>
+         <div className=''>
+             <div className='bg-cyan-300'><Navber></Navber></div>
+            <div className='px-3'>
             <Outlet></Outlet>
+            </div>
          </div>
         </div>
     );

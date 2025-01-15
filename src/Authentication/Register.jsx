@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Authcontext } from '../Authprovider/Authprovider';
 
 const Register = () => {
 
-const {Create_New_User_using_Register,updateprofile} = useContext(Authcontext)
-
-
+const {Create_New_User_using_Register,updateprofile,setuser} = useContext(Authcontext)
+const [RegisterError,SetRegisterError] = useState('')
+const [success,setsuccess] = useState(false)
 const RegisterData = (e)=>{
     e.preventDefault()
     const form    = new FormData(e.target);
@@ -13,7 +13,9 @@ const RegisterData = (e)=>{
     const email   = form.get('email')
     const photourl= form.get('photourl')
     const password= form.get('password')
-
+    
+    SetRegisterError('')
+    setsuccess(false)
 const registervalue = {
         name,
         email,
@@ -21,18 +23,40 @@ const registervalue = {
         password
     }
     console.log(registervalue);
+    const regex1 = /(?=.*[A-Z])/; // At least one uppercase letter
+    const regex2 = /(?=.*[a-z])/; // At least one lowercase letter
+if(!regex1.test(password))
+  {
+     SetRegisterError('password should have one uppercase')
+  return
+    }
+  if(!regex2.test(password)){
+     SetRegisterError('password should have one lowercase')
+  return
+    }
+if(password.length < 6){
+   SetRegisterError('password length atleast 6 character')
+return
+  }
+
 
     Create_New_User_using_Register(email,password)
     .then((result)=>{
         console.log(result)
-        updateprofile({displayName: name, 
-            photoURL : photourl})
+        setsuccess(true)
         
+        
+        updateprofile(
+          {displayName: name, 
+            photoURL : photourl})
+            setuser({...result.user,displayName:name,photoURL:photourl})
+            
     })
     .then((error)=>{
         console.log(error.message)
         
     })
+
 
 
 }
@@ -75,9 +99,18 @@ const registervalue = {
           </label>
         </div>
         <div className="form-control mt-6">
-          <button className="btn btn-primary">Login</button>
+          <button className="btn btn-primary">Register</button>
         </div>
       </form>
+
+{
+  RegisterError && <p className='text-red-600'>{RegisterError}</p>
+}
+{
+
+success && <p className='text-green-700'>Register Successfully</p>
+}
+
     </div>
 
 
