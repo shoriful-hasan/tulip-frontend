@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import navicon from '/assets/favicon.jpg'
 import { Authcontext } from '../Authprovider/Authprovider';
+import { Tooltip } from 'react-tooltip';
 
 const Navber = () => {
 
 const {logout,user} = useContext(Authcontext);
 console.log(user);
 
+const tooltipContent = user&& user?.email && <p>{user.displayName}</p> 
     return (
         <div className="navbar bg-">
         <div className="navbar-start">
@@ -46,21 +48,25 @@ console.log(user);
           </ul>
         </div>
         <div className="navbar-end">
-         
-      
+        <span data-tooltip-id="my-tooltip" className='mr-10' data-tooltip-place="top">
         {
-            user&& user?.email ? <>
-             <p>{user.displayName}</p> 
-             <button onClick={logout} className='btn btn-success'>logout</button>
-            </>
-            
-            
-            
-            :  <li className='list-none'><Link to='/login'>Login</Link></li>
-          
+            user&& user?.email && <img src={user.photoURL} className='w-14 h-14 rounded-full' alt="" srcset="" />
           
           
           }
+</span>
+<Tooltip id="my-tooltip" className='z-10'>{tooltipContent}</Tooltip> 
+    
+  {
+ user&& user?.email ?
+ 
+ <><button onClick={logout} className='btn btn-success'>logout</button></>
+
+           :<li className='list-none'><Link to='/login'>Login</Link></li>
+           
+ 
+
+  }
         </div>
   
       </div>

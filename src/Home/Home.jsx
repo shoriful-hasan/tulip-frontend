@@ -1,8 +1,13 @@
 import React from 'react';
 import Slider from '../Component/Slider';
 import { Fade, Slide } from 'react-awesome-reveal';
+import { useLoaderData } from 'react-router-dom';
+import Productcard from '../Component/Productcard';
 
 const Home = () => {
+const data = useLoaderData()
+console.log(data);
+
     return ( 
         <div >
  
@@ -21,6 +26,18 @@ const Home = () => {
                 </div>
             <div className='border sm:w-full lg:w-1/2'><Slider></Slider></div>
             </div>
+
+
+
+<div className='max-w-screen-xl mx-auto mt-28'>
+    <div className='text-center mb-10'><h1 className='text-5xl'>Running Campaign</h1></div>
+<div className='grid grid-cols-3'>
+{
+    data.map((item) => <Productcard key={item._id} item ={item}></Productcard> )
+}
+</div>
+</div>
+
 
         </div>
     );
