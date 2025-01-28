@@ -9,6 +9,7 @@ import Mycamp from '../Mycamp/Mycamp';
 import Login from '../Authentication/Login';
 import Register from '../Authentication/Register';
 import Private from '../Private/Private';
+import Details from '../Component/Details';
 
 
 
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
             {
                 path : '/Addcamp',
                 element : <Private privatecontent={<Addnew></Addnew>}></Private>
+            },
+            {
+                path : '/single/:id',
+                element : <Details></Details>,
+                loader : ({params}) => fetch(`http://localhost:5000/tulivalueid/${params.id}`)
             },
             {
 

@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from "../assets/Animation - 1736140034086.json";
 import { Authcontext } from '../Authprovider/Authprovider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 const Login = () => {
-
+const location = useLocation()
+console.log(location)
+const navigate = useNavigate()
 const {usersignin} = useContext(Authcontext)
 
 
@@ -22,7 +24,8 @@ const Handle_login_signin = (e)=>{
 
 usersignin(email,password)
 .then((result)=>{
-console.log(result)
+console.log(result);
+navigate(location?.state ? location.state : '/')
 
 })
 .then((error) =>{
