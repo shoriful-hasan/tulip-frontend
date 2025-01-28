@@ -25,7 +25,8 @@ const router = createBrowserRouter([
             },
             {
                 path : '/allcampaign',
-                element : <Allcampaign></Allcampaign>
+                element : <Allcampaign></Allcampaign>,
+                loader :()=> fetch('http://localhost:5000/tulipallvalueGetdata')
             },
             {
                 path : '/Addcamp',
