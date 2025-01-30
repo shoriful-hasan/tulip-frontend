@@ -10,6 +10,7 @@ import Login from '../Authentication/Login';
 import Register from '../Authentication/Register';
 import Private from '../Private/Private';
 import Details from '../Component/Details';
+import Updatedetails from '../Component/Updatedetails';
 
 
 
@@ -34,13 +35,15 @@ const router = createBrowserRouter([
             },
             {
                 path : '/single/:id',
-                element : <Details></Details>,
+                element : <Private privatecontent={<Details></Details>} ></Private>,
                 loader : ({params}) => fetch(`http://localhost:5000/tulivalueid/${params.id}`)
             },
+           
             {
 
                 path : '/mycamp',
-                element : <Private privatecontent={<Mycamp></Mycamp>}></Private>
+                element : <Private privatecontent={<Mycamp></Mycamp>}></Private>,
+               
             },
             {
                 path : '/login',
@@ -50,6 +53,7 @@ const router = createBrowserRouter([
                  path : '/register',
                  element : <Register></Register>
             },
+    
             {
                 path : '*',
                 element : <Notfound></Notfound>

@@ -1,18 +1,22 @@
 import React, { useContext } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, useLocation } from 'react-router-dom';
 import { Authcontext } from '../Authprovider/Authprovider';
+import Swal from 'sweetalert2';
 
 const Details = () => {
+  const location = useLocation();
+  console.log(location);
+  
     const data = useLoaderData();
     const {user} = useContext(Authcontext)
 const {_id,imageurl,campaignTitle,CampaignType,description,datetime}  = data;
 
 const donationdata = ()=>{
   const name = user.displayName;
-  const imageurl = user.photoURL;
+  const imageurL = imageurl;
   const email  = user.email; 
   const data ={
-    imageurl,campaignTitle,CampaignType,description,datetime,name,imageurl,email
+    campaignTitle,CampaignType,description,datetime,name,imageurL,email
   };
   console.log(data);
   fetch('http://localhost:5000/tulipdonationdata',{
@@ -21,12 +25,21 @@ const donationdata = ()=>{
     body    : JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(data => console.log(data))
-
-
+   .then(data => {
+              console.log(data)
+              if(data.insertedId){
+                  Swal.fire({
+                      title: "Donation Done",
+                      text: "Thanks For Your Contribution",
+                      icon: "success"
+                    });
+              }
+              
+          })
 }
     
     return (
+      
         <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
         <div className="max-w-3xl bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Image Section */}

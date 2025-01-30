@@ -1,11 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { Authcontext } from '../Authprovider/Authprovider';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
 const {Create_New_User_using_Register,updateprofile,setuser} = useContext(Authcontext)
 const [RegisterError,SetRegisterError] = useState('')
 const [success,setsuccess] = useState(false)
+const location = useLocation()
+const navigate = useNavigate()
+
 const RegisterData = (e)=>{
     e.preventDefault()
     const form    = new FormData(e.target);
@@ -44,7 +48,7 @@ return
     .then((result)=>{
         console.log(result)
         setsuccess(true)
-        
+        navigate(location?.state  ? location.state : '/')
         
         updateprofile(
           {displayName: name, 
