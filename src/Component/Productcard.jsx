@@ -15,7 +15,7 @@ const Productcard = ({item}) => {
   </figure>
   <div className="card-body">
     <h2 className="card-title">{campaignTitle}</h2>
-    <p>{description}</p>
+    <p>{description.split(" ").slice(0, 20).join(" ")}</p>
     <div className="card-actions justify-end">
       <button className="btn btn-primary">See More</button>
     </div>

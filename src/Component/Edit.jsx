@@ -3,9 +3,17 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { Authcontext } from '../Authprovider/Authprovider';
 import Swal from 'sweetalert2';
-const Addnew = () => {
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+const Edit = () => {
     const [startdate,setstartdate] = useState(new Date())
     const {user} = useContext(Authcontext)
+    const data = useLoaderData();
+    const location = useLocation();
+    const navigate = useNavigate()
+    console.log(data);
+    const {_id} = data;
+    console.log(_id);
+    
       const Additem = (e)=>{
         e.preventDefault();
         console.log('add btn are click');
@@ -18,37 +26,29 @@ const Addnew = () => {
         const datetime     = formdata.get('datetime');
         const userName    = formdata.get('userName');
         const UserEmail   = formdata.get('UserEmail') 
-        const data  = {
-            imageurl     :imageurl,
-           campaignTitle :campaignTitle,
-            CampaignType :CampaignType,
-            description  :description,
-            datetime     :datetime,
-            userName     :userName,
-            UserEmail    :UserEmail
+        const data = {
+            imageurl      :imageurl,
+            campaignTitle :campaignTitle,
+             CampaignType :CampaignType,
+             description  :description,
+             datetime     :datetime,
+             userName     :userName,
+             UserEmail    :UserEmail
         }
-        console.log(data);
-        
-        fetch('http://localhost:5000/tulipallvalue',{
-            method : 'post',
+        fetch(`http://localhost:5000/tulipdonationdataGet/${_id}`,{
+            method : 'PATCH',
             headers : {'content-type' : 'application/json'},
             body :JSON.stringify(data)
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            if(data.insertedId){
-                Swal.fire({
-                    title: "Item Added",
-                    text: "Successfully",
-                    icon: "success"
-                  });
-            }
+            console.log(data);
+            navigate(location?.state ? location.state : '/mycamp')
+      
             
         })
 
-        console.log(data);
-        form.reset()        
+       
       }
 
     return (
@@ -63,7 +63,7 @@ const Addnew = () => {
                 
                         <div>
                         <label>image</label><br />
-                    <input type="text" placeholder="Type here" name='imageurl'
+                    <input type="text" placeholder="Type here" name='imageurl' defaultValue={data.imageurL}
                     className="input input-bordered input-success w-full max-w-xs" />
                         </div>
 
@@ -90,14 +90,14 @@ const Addnew = () => {
 
                         <div>
                         <label>Campaign Title</label><br />
-                    <input type="text" placeholder="Type here" name='campaignTitle'
+                    <input type="text" placeholder="Type here" defaultValue={data.campaignTitle} name='campaignTitle'
                     className="input input-bordered input-success w-full max-w-xs" />
                         </div>
                         <div className='text-center'>
     
                         <label>Campain Type</label>
                        <div className='input input-bordered text-center input-success w-full max-w-xs'>
-               <select name="CampaignType" id="amount" className='w-full'>
+               <select name="CampaignType" id="amount" className='w-full' defaultValue={data.CampaignType}>
                    <option value="personal issue">personal issue</option>
                    <option value="startup">startup</option>
                    <option value=" business">business</option>
@@ -107,7 +107,7 @@ const Addnew = () => {
                        </div> 
                         <div className='col-span-full w-full '>
                         <label>Description</label><br />
-                    <textarea name="description" id="" rows={4} cols={50} className='w-full'></textarea>
+                    <textarea name="description" id="" defaultValue={data.description} rows={4} cols={50} className='w-full'></textarea>
                         </div>
 
                        <div className='text-center'>
@@ -154,7 +154,7 @@ const Addnew = () => {
         
 
                   </div>
-                  <button  className='btn btn-accent w-full mt-5' type='submit'>Add</button>
+                 <button  className='btn btn-accent w-full mt-5' type='submit'>Update</button>
                 </form>
             </div>
         </div>
@@ -162,4 +162,4 @@ const Addnew = () => {
     );
 };
 
-export default Addnew;
+export default Edit;

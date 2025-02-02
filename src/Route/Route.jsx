@@ -11,6 +11,7 @@ import Register from '../Authentication/Register';
 import Private from '../Private/Private';
 import Details from '../Component/Details';
 import Updatedetails from '../Component/Updatedetails';
+import Edit from '../Component/Edit';
 
 
 
@@ -38,12 +39,16 @@ const router = createBrowserRouter([
                 element : <Private privatecontent={<Details></Details>} ></Private>,
                 loader : ({params}) => fetch(`http://localhost:5000/tulivalueid/${params.id}`)
             },
-           
+           {
+            path :'/update/:id',
+            element : <Edit></Edit>,
+            loader : ({params}) => fetch(`http://localhost:5000/tulipdonationdataGet/${params.id}`)
+           },
             {
 
                 path : '/mycamp',
                 element : <Private privatecontent={<Mycamp></Mycamp>}></Private>,
-               
+        
             },
             {
                 path : '/login',

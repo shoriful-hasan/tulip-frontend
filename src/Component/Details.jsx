@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { Link, useLoaderData, useLocation } from 'react-router-dom';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { Authcontext } from '../Authprovider/Authprovider';
 import Swal from 'sweetalert2';
 
 const Details = () => {
   const location = useLocation();
   console.log(location);
-  
+  const navigate = useNavigate()
     const data = useLoaderData();
     const {user} = useContext(Authcontext)
 const {_id,imageurl,campaignTitle,CampaignType,description,datetime}  = data;
@@ -33,7 +33,8 @@ const donationdata = ()=>{
                       text: "Thanks For Your Contribution",
                       icon: "success"
                     });
-              }
+              };
+              navigate(location?.state ? location.state : '/mycamp')
               
           })
 }
